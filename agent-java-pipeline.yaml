@@ -1,1 +1,18 @@
+trigger:
+- main
 
+pool:
+  name: agent-java
+
+steps:
+- checkout: self
+
+- task: Kubernetes@1
+  inputs:
+    connectionType: 'Kubernetes Service Connection'
+    kubernetesServiceEndpoint: 'ado-agent-service-connection'
+    namespace: 'default'
+    command: 'get'
+    arguments: 'pod'
+    secretType: 'dockerRegistry'
+    containerRegistryType: 'Azure Container Registry'
